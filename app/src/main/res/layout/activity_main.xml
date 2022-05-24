@@ -16,6 +16,7 @@
 
     <ImageView
         android:id="@+id/img_icon_weather"
+        android:background="@drawable/bg_icon_weather"
         android:layout_width="120dp"
         android:layout_height="120dp"
         android:contentDescription="@string/content_image_icon"

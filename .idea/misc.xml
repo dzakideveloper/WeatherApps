@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/bg_icon_weather.xml" value="0.155" />
         <entry key="app/src/main/res/drawable/color_cursor.xml" value="0.13" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.23148148148148148" />
         <entry key="app/src/main/res/layout/row_item_weather.xml" value="0.2864583333333333" />

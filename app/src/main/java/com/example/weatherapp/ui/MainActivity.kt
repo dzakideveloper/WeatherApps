@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.weatherapp.BuildConfig
+import com.example.weatherapp.R
 import com.example.weatherapp.data.response.ForecastResponse
 import com.example.weatherapp.data.response.WeatherResponse
 import com.example.weatherapp.databinding.ActivityMainBinding
@@ -119,8 +120,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupView(weather: WeatherResponse?, forecast: ForecastResponse?) {
-        weather?.let {
-            binding.apply {
+        binding.apply {
+            weather?.let {
                 tvDegree.text = formatDegree(weather.main?.temp)
                 tvCity.text = weather.name
 
@@ -128,17 +129,50 @@ class MainActivity : AppCompatActivity() {
                 val iconUrl = BuildConfig.ICON_URL + icon + iconSizeWeather4x
                 Glide.with(applicationContext).load(iconUrl).into(binding.imgIconWeather)
 
-                rvForecastWeather.apply {
-                    layoutManager = LinearLayoutManager(
-                        applicationContext,
-                        LinearLayoutManager.HORIZONTAL,
-                        false
-                    )
-                    adapter = mAdapter
-                }
+                setUpBackgroundWeather(weather.weather?.get(0)?.id, icon)
 
             }
+            rvForecastWeather.apply {
+                mAdapter.setData(forecast?.list)
+                layoutManager = LinearLayoutManager(
+                    applicationContext,
+                    LinearLayoutManager.HORIZONTAL,
+                    false
+                )
+                adapter = mAdapter
+            }
         }
+    }
+
+    private fun setUpBackgroundWeather(idWeather: Int?, icon: String?) {
+        idWeather?.let {
+            when (idWeather) {
+                in resources.getIntArray(R.array.thunderstorm_id_list) -> setImageBackground(R.drawable.thunderstorm)
+                in resources.getIntArray(R.array.drizzle_id_list) -> setImageBackground(R.drawable.drizzle)
+                in resources.getIntArray(R.array.rain_id_list) -> setImageBackground(R.drawable.rain)
+                in resources.getIntArray(R.array.freezing_rain_id_list) -> setImageBackground(R.drawable.freezing_rain)
+                in resources.getIntArray(R.array.snow_id_list) -> setImageBackground(R.drawable.snow)
+                in resources.getIntArray(R.array.sleet_id_list) -> setImageBackground(R.drawable.sleet)
+                in resources.getIntArray(R.array.clear_id_list) -> {
+                    when (icon) {
+                        "01d" -> setImageBackground(R.drawable.clear)
+                        "01n" -> setImageBackground(R.drawable.clear_night)
+                    }
+                }
+                in resources.getIntArray(R.array.clouds_id_list) -> setImageBackground(R.drawable.lightcloud)
+                in resources.getIntArray(R.array.heavy_clouds_id_list) -> setImageBackground(R.drawable.heavycloud)
+                in resources.getIntArray(R.array.fog_id_list) -> setImageBackground(R.drawable.fog)
+                in resources.getIntArray(R.array.sand_id_list) -> setImageBackground(R.drawable.sand)
+                in resources.getIntArray(R.array.dust_id_list) -> setImageBackground(R.drawable.dust)
+                in resources.getIntArray(R.array.volcanic_ash_id_list) -> setImageBackground(R.drawable.volcanic)
+                in resources.getIntArray(R.array.squalls_id_list) -> setImageBackground(R.drawable.squalls)
+                in resources.getIntArray(R.array.tornado_id_list) -> setImageBackground(R.drawable.tornado)
+            }
+        }
+    }
+
+    private fun setImageBackground(image: Int) {
+        Glide.with(applicationContext).load(image).into(binding.imgBgWeather)
     }
 
     private fun searchCity() {

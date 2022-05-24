@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Weather App</string>
+    <string name="descCont">Image by Weather</string>
+    <string name="content_image_icon">image icon by current weather</string>
+</resources>
